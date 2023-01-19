@@ -1,14 +1,19 @@
 ﻿using System.Diagnostics;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace books_text_replacement
 {
     internal class Program
     {
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool BringWindowToTop(IntPtr hWnd);
         static void Main(string[] args)
         {
             List<Book> Books = new List<Book>();
             ConsoleKey key;
+            IntPtr hWnd = Process.GetCurrentProcess().MainWindowHandle;
             do
             {
                 Console.Title = "Books";
@@ -19,6 +24,7 @@ namespace books_text_replacement
 3: Save Changes
 
 ");
+                BringWindowToTop(hWnd);
                 key = Console.ReadKey().Key;
                 switch (key)
                 {
