@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Books\" />
+    <Folder Include="Screenshots\" />
   </ItemGroup>
 
   <ItemGroup>

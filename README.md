@@ -1,15 +1,15 @@
 Your post states that you **need to replace a string inside with something else** and you _could_ consider the entire file as "one long string" and do some processing on that. The `Regex` solution is probably a great way to go in that case. 
 
-But I read your code carefully from the perspective of what you're actually trying to _do_. Ok, so my crystal ball isn't' 100% but I believe that if we meet back up a few weeks from now, it will have occurred to you want certain elements:
+But I read your code carefully from the perspective of what you're actually trying to _do_. Ok, so my crystal ball isn't 100% but I believe that if we meet back up a few weeks from now, it will have occurred to you want certain elements:
 
-- A 'class' that represents a Book.
+- A `class` that represents a Book.
 - A _serialization method_ (like Json) that can take a file and turn it into a Book and vice-versa.
-- A way to search these Books (like SQLite) based on the properties in the Book class.
+- A way to search the books (like SQLite) based on the properties in the Book class.
+
+Having a `Book` class would simplify the substitution that you want to do because the `Synopsis` property would already be separated out. Then you could perform a standard `string.Replace` in a targeted way.
 
 ***
 **Book class**
-
-The string replacement that you want to do might be easier if you had the `Synopsis` already separated out. Then you could perform a simple `string.Replace` in a targeted way.
 
     class Book
     {
@@ -38,10 +38,16 @@ The string replacement that you want to do might be easier if you had the `Synop
         }
     }
 
+Replace:
+
+    book.Synopsis = book.Synopsis.Replace("Blah", "Marklar");
+
+[![test][1]][1]
+
 ***
 **Serialization** - The hard way
 
-Here's a method that uses the string representations in your post to turn a "file" into a `Book`.
+You stated that the `.txt` files are on disk. Here's a method that uses the string representations in your post to turn a "file" into a `Book`.
 
     public Book(string file)
     {
@@ -74,9 +80,7 @@ Here's a method that uses the string representations in your post to turn a "fil
         Synopsis = synopsis.ToString();
     }
 
-This offers one solution to your original question about **Replace Value Text Over Multiple Lines**:  _Turn it into a `class` and apply the `Replace` to one of the book's properties._
-
-For example:
+That's a lot of work, but now you can **replace value over multiple lines** starting with a raw file:
 
     book = new Book("492C9F2A7E73.txt");
     book.Synopsis = book.Synopsis.Replace("Blah", "Marklar");
@@ -85,7 +89,9 @@ For example:
 ***
 **Serialization** - An easier way
 
-But also please consider using something like the Newtonsoft.Json NuGet to simplify your serialization. It still writes the file in plain text and you'll even see the ':' character used in a similar way to your file listings. But the format lets Json reconstuct a `Book` object directly.
+But also please consider `using` something like the `Newtonsoft.Json` NuGet to simplify your serialization. It still writes the file in plain text and you'll even see the ':' character used in a similar way to your file listings. But the format lets Json reconstruct a `Book` object directly.
+
+_SAVE_
 
     var path = Path.Combine(dir, $"{book.ISBN}.json");
     File.WriteAllText(path, JsonConvert.SerializeObject(book));
@@ -104,12 +110,11 @@ Result in file (this is after doing the replacement):
       "Synopsis": "Blah Blah Blah Blah Blah Blah Blah Blah\r\n\tBlah Blah Blah Blah Blah Blah Blah Blah\r\n\tBlah Blah Blah Blah Blah Blah Blah Blah\r\n\tBlah Blah Blah Blah Blah Blah Blah Blah\r\n"
     }
 
-_or_
+_LOAD_
  
     var book = JsonConvert.DeserializeObject<Book>(File.ReadAllText("492C9F2A7E73.txt"));
 
 There's more than one way to do what you asked. The benefit of doing something like this is to set you up going forward for a search engine using the Book class.
 
 
-
-
+  [1]: https://i.stack.imgur.com/xPuXT.png
