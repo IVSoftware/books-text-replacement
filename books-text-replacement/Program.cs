@@ -7,6 +7,7 @@ namespace books_text_replacement
     {
         static void Main(string[] args)
         {
+            List<Book> Books = new List<Book>();
             ConsoleKey key;
             do
             {
@@ -31,18 +32,18 @@ namespace books_text_replacement
             } while (!key.Equals(ConsoleKey.Escape));
             void loadBooks()
             {
+                Books.Clear();
                 Console.Clear();
                 var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Books");
                 foreach (var file in Directory.GetFiles(dir))
                 {
                     // IS:
-                    var book = new Book(file);
+                    Books.Add(new Book(file));
 
                     // SHOULD BE: using Newtonsoft.Json
                     // var book = JsonConvert.DeserializeObject<Book>(File.ReadAllText(file));
 
-                    Console.WriteLine(book);
-                    Console.WriteLine();
+                    Console.WriteLine(string.Join(Environment.NewLine, Books));
                 }
                 Console.WriteLine("Any key to continue...");
                 Console.ReadKey(true);
@@ -56,11 +57,15 @@ namespace books_text_replacement
                 Console.WriteLine("Enter replace with:");
                 var replaceWith = Console.ReadLine();
 
+
+
                 Console.WriteLine("Any key to continue...");
                 Console.ReadKey(true);
             }
             void saveBooks() 
-            { }
+            { 
+
+            }
         }
         class Book
         {
@@ -98,7 +103,7 @@ namespace books_text_replacement
                             case "Release Date": Release = parse[1]; break;
                             case "Characters": Characters = parse[1]; break;
                             case "Genre": Genre = parse[1]; break;
-                            case "Synopsis": synopsis.Append("\t" + parse[1] + Environment.NewLine); break;
+                            case "Synopsis": synopsis.Append(parse[1] + Environment.NewLine); break;
                             default: Debug.Assert(false, $"Error reading '{property}'"); break;
                         }
                     }
@@ -108,15 +113,15 @@ namespace books_text_replacement
             public override string ToString()
             {
                 return
-                    $"{BookNumber}{Environment.NewLine}" +
-                    $"{Title}{Environment.NewLine}" +
-                    $"{Author}{Environment.NewLine}" +
-                    $"{ISBN}{Environment.NewLine}" +
-                    $"{Written}{Environment.NewLine}" +
-                    $"{Release}{Environment.NewLine}" +
-                    $"{Characters}{Environment.NewLine}" +
-                    $"{Genre}{Environment.NewLine}" +
-                    $"{Synopsis}{Environment.NewLine}";
+                    $"Book number : {BookNumber}{Environment.NewLine}" +
+                    $"Title : {Title}{Environment.NewLine}" +
+                    $"Author : {Author}{Environment.NewLine}" +
+                    $"ISBN : {ISBN}{Environment.NewLine}" +
+                    $"Written Date : {Written}{Environment.NewLine}" +
+                    $"Release Date : {Release}{Environment.NewLine}" +
+                    $"Characters : {Characters}{Environment.NewLine}" +
+                    $"Genre : {Genre}{Environment.NewLine}" +
+                    $"Synopsis : {Synopsis}{Environment.NewLine}";
         }
         }
     }
