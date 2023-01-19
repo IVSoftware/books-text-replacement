@@ -7,7 +7,7 @@ But I read your code carefully from the perspective of what you're actually tryi
 - A way to search these Books (like SQLite) based on the properties in the Book class.
 
 ***
-**Book**
+**Book class**
 
 The string replacement that you want to do might be easier if you had the `Synopsis` already separated out. Then you could perform a simple `string.Replace` in a targeted way.
 
