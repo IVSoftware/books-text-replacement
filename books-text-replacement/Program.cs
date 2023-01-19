@@ -62,8 +62,12 @@ namespace books_text_replacement
                 Console.WriteLine();
                 Console.WriteLine("Enter replace with:");
                 var replaceWith = Console.ReadLine();
-
-
+                foreach (var book in Books)
+                {
+                    book.Synopsis = book.Synopsis.Replace(replace, replaceWith);
+                }
+                Console.Clear();
+                Console.WriteLine(string.Join(Environment.NewLine, Books));
 
                 Console.WriteLine("Any key to continue...");
                 Console.ReadKey(true);
