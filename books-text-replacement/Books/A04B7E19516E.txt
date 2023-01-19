@@ -1,0 +1,10 @@
+Book number: 3
+Title : Something Title
+Author : Some Author
+ISBN: A04B7E19516E
+Written Date : Some date
+Release Date: Some date
+Characters: Blah Blah
+Genre: Romance
+Synopsis : Blah Blah Blah Blah Blah Blah Blah Blah
+       Blah Blah Blah Blah Blah Blah Blah Blah
