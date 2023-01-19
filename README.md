@@ -66,12 +66,27 @@ The solution I would offer to your original question about **Replace Value Text 
 Then you can easily perform a string replacement on the `Synopsis` property. For example:
 
     book = new Book("492C9F2A7E73.txt");
-    book.Synopsis = book.Synopsis.Replace(replace, replaceWith);
+    book.Synopsis = book.Synopsis.Replace("Blah", "Marklar");
 
 ***
 But also please consider using something like the Newtonsoft.Json NuGet to simplify your serialization. It still writes the file in plain text and you'll even see the ':' character used in a similar way to your file listings. But the format lets Json reconstuct a `Book` object directly.
 
-    File.WriteAllText("492C9F2A7E73.txt", JsonConvert.SerializeObject(book));
+    var path = Path.Combine(dir, $"{book.ISBN}.json");
+    File.WriteAllText(path, JsonConvert.SerializeObject(book));
+
+Result in file (this is after doing the replacement):
+
+    {
+      "BookNumber": "2",
+      "Title": "Something Title",
+      "Author": "Some Author",
+      "ISBN": "7E092CB94CCD",
+      "Written": "Some date",
+      "Release": "Some date",
+      "Characters": "Blah Blah",
+      "Genre": "Romance",
+      "Synopsis": "Blah Blah Blah Blah Blah Blah Blah Blah\r\n\tBlah Blah Blah Blah Blah Blah Blah Blah\r\n\tBlah Blah Blah Blah Blah Blah Blah Blah\r\n\tBlah Blah Blah Blah Blah Blah Blah Blah\r\n"
+    }
 
 _or_
  

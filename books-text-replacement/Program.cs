@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Newtonsoft.Json;
+using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -11,9 +12,13 @@ namespace books_text_replacement
         static extern bool BringWindowToTop(IntPtr hWnd);
         static void Main(string[] args)
         {
+            #region D E C L A R A T I O N S
             List<Book> Books = new List<Book>();
             ConsoleKey key;
+            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Books");
             IntPtr hWnd = Process.GetCurrentProcess().MainWindowHandle;
+            #endregion D E C L A R A T I O N S
+
             do
             {
                 Console.Title = "Books";
@@ -22,6 +27,7 @@ namespace books_text_replacement
 1: Load books
 2: Modify books
 3: Save Changes
+4: Open Folder in File Explorer
 
 ");
                 BringWindowToTop(hWnd);
@@ -31,6 +37,7 @@ namespace books_text_replacement
                     case ConsoleKey.D1: loadBooks(); break;
                     case ConsoleKey.D2: modifyBooks(); break;
                     case ConsoleKey.D3: saveBooks(); break;
+                    case ConsoleKey.D4: Process.Start("explorer.exe", dir); break;
                     case ConsoleKey.Escape:
                         break;
                 }
@@ -40,8 +47,7 @@ namespace books_text_replacement
             {
                 Books.Clear();
                 Console.Clear();
-                var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Books");
-                foreach (var file in Directory.GetFiles(dir))
+                foreach (var file in Directory.GetFiles(dir, "*.txt"))
                 {
                     // IS:
                     Books.Add(new Book(file));
@@ -73,8 +79,12 @@ namespace books_text_replacement
                 Console.ReadKey(true);
             }
             void saveBooks() 
-            { 
-
+            {
+                foreach (var book in Books)
+                {
+                    var path = Path.Combine(dir, $"{book.ISBN}.json");
+                    File.WriteAllText(path, JsonConvert.SerializeObject(book, Formatting.Indented));
+                }
             }
         }
         class Book
