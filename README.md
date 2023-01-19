@@ -1,6 +1,6 @@
 Your post states that you **need to replace a string inside with something else** and you _could_ consider the entire file as "one long string" and do some processing on that. The `Regex` solution is probably a great way to go in that case. 
 
-But I'm reading your post and code from the perspective of what you're actually trying to _do_. Ok, so my crystal ball isn't' 100% but I believe that if we meet back up a few weeks from now, it will have occurred to you want certain elements:
+But I read your code carefully from the perspective of what you're actually trying to _do_. Ok, so my crystal ball isn't' 100% but I believe that if we meet back up a few weeks from now, it will have occurred to you want certain elements:
 
 - A 'class' that represents a Book.
 - A _serialization method_ (like Json) that can take a file and turn it into a Book and vice-versa.
