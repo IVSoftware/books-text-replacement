@@ -4,7 +4,7 @@ But I'm reading your post and code from the perspective of what you're actually 
 
 - A 'class' that represents a Book.
 - A _serialization method_ (like Json) that can take a file and turn it into a Book and vice-versa.
-_ A way to search these Books (like SQLite) based on the properties in the Book class.
+- A way to search these Books (like SQLite) based on the properties in the Book class.
 
 ***
 **Book**
@@ -22,6 +22,20 @@ This string replacement that you're wanting to do. Wouldn't it be easier if you 
         public string? Characters { get; set; }
         public string? Genre { get; set; }
         public string? Synopsis { get; set; }
+        // Display
+        public override string ToString()
+        {
+            return
+                $"Book number : {BookNumber}{Environment.NewLine}" +
+                $"Title : {Title}{Environment.NewLine}" +
+                $"Author : {Author}{Environment.NewLine}" +
+                $"ISBN : {ISBN}{Environment.NewLine}" +
+                $"Written Date : {Written}{Environment.NewLine}" +
+                $"Release Date : {Release}{Environment.NewLine}" +
+                $"Characters : {Characters}{Environment.NewLine}" +
+                $"Genre : {Genre}{Environment.NewLine}" +
+                $"Synopsis : {Synopsis}{Environment.NewLine}";
+        }
     }
 
 ***
@@ -92,7 +106,7 @@ _or_
  
     var book = JsonConvert.DeserializeObject<Book>(File.ReadAllText("492C9F2A7E73.txt"));
 
-There's more than one way to go about what you want to do, but the benefits of something like this is that you would be set up really well to do some kind of search engine using the Book class.
+There's more than one way to do what you asked. The benefit of doing something like this is to set you up going forward for a search engine using the Book class.
 
 
 
