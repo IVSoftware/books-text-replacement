@@ -74,15 +74,17 @@ Here's a method that uses the string representations in your post to turn a "fil
         Synopsis = synopsis.ToString();
     }
 
-***
-The solution I would offer to your original question about **Replace Value Text Over Multiple Lines** is to turn it into a class and apply the Replace to one of the book's properties.'
+This offers one solution to your original question about **Replace Value Text Over Multiple Lines**:  _Turn it into a `class` and apply the `Replace` to one of the book's properties._
 
-Then you can easily perform a string replacement on the `Synopsis` property. For example:
+For example:
 
     book = new Book("492C9F2A7E73.txt");
     book.Synopsis = book.Synopsis.Replace("Blah", "Marklar");
 
+
 ***
+**Serialization** - An easier way
+
 But also please consider using something like the Newtonsoft.Json NuGet to simplify your serialization. It still writes the file in plain text and you'll even see the ':' character used in a similar way to your file listings. But the format lets Json reconstuct a `Book` object directly.
 
     var path = Path.Combine(dir, $"{book.ISBN}.json");
