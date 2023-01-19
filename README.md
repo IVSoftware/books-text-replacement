@@ -9,7 +9,7 @@ But I read your code carefully from the perspective of what you're actually tryi
 ***
 **Book**
 
-This string replacement that you're wanting to do. Wouldn't it be easier if you had the `Synopsis` all separated out so that you could perform that action in a targeted way?
+The string replacement that you want to do might be easier if you had the `Synopsis` already separated out. Then you could perform a simple `string.Replace` in a targeted way.
 
     class Book
     {
