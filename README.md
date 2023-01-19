@@ -114,6 +114,10 @@ _LOAD_
  
     var book = JsonConvert.DeserializeObject<Book>(File.ReadAllText("492C9F2A7E73.txt"));
 
+_QUERY_
+   
+    var romanceBooks = database.Query<Book>("SELECT * FROM books WHERE Genre='Romance'");
+
 There's more than one way to do what you asked. The benefit of doing something like this is to set you up going forward for a search engine using the Book class.
 
 
